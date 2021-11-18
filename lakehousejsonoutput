@@ -1,0 +1,15 @@
+import pyodbc
+import pandas
+
+host = 'localhost'
+port = '31010'
+uid = 'username'
+pwd = 'password'
+driver = 'ODBC Driver 64-bit'
+
+cnxn=pyodbc.connect("Driver={};ConnectionType=Direct;HOST={};PORT={};AuthenticationType=Plain;UID={};PWD={}".format(driver,host,port,uid,pwd),autocommit=True)
+
+sql = '''SELECT * FROM "DataSet".table'''
+
+dataframe = pandas.read_sql(sql,cnxn)
+dataframe.to_json(r'output.json')
